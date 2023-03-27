@@ -6,12 +6,11 @@ def solution(X, Y):
     Y = Counter(Y)
     for i in "9876543210":
         if v := min(X.get(i, 0), Y.get(i, 0)):
-            result.append(i * v)
+            for _ in range(v):
+                result.append(i)
 
     if not result:
         return "-1"
-    
-    if not any(map(int, result)):
+    if result[0] == "0" and result[-1] == "0":
         return "0"
-    else:
-        return "".join(result)
+    return "".join(result)
