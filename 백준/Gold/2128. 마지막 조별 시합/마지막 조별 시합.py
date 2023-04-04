@@ -14,7 +14,6 @@ def bit_maker(problem):
     for p in problem:
         bit |= (1 << (d-p))
     return bit
-
 maxi = 0
 for c in comb:
     c_bit = bit_maker(c)
@@ -25,3 +24,24 @@ for c in comb:
             cnt += 1
     maxi = max(maxi, cnt)
 print(maxi)
+
+# set 풀이
+# bonus = 0
+# student = defaultdict(set)
+# for i in range(n):
+#     pbs = list(map(int, input().split()))
+#     if pbs[0] == 0:
+#         bonus += 1
+#     for p in range(pbs[0]):
+#         student[i].add(pbs[p+1])
+# comb = []
+# for i in range(1, k+1):
+#     comb.extend(list(map(set, combinations(dlist, i))))
+# maxi = 0
+# for c in comb:
+#     count = 0
+#     for st, pb in student.items():
+#         if len(pb - c) == 0:
+#             count += 1
+#     maxi = max(maxi, count)
+# print(maxi + bonus)
