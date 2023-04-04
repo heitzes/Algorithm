@@ -6,8 +6,6 @@ def solution(food_times, k):
     다 먹은 음식은 힙에서 제거
     """
     heap = []
-    if k >= sum(food_times):
-        return -1
     for ind, time in enumerate(food_times):
         heapq.heappush(heap, [time, ind+1])
     hlen = len(heap)
@@ -18,7 +16,11 @@ def solution(food_times, k):
         k -= (heap[0][0]-remember) * hlen
         hlen -= 1
         remember = heapq.heappop(heap)[0]
-    dq = sorted([[h[1], h[0]-remember] for h in heap])
+    """
+    [1,1,1,1] / 4 인 경우, 맨 처음 1만 뽑으면 뒤의 음식들은 여전히 heap에 남아있다
+    -> 남은 음식양 - remember 값이 0이 아닌 경우에만 deque에 추가
+    """
+    dq = sorted([[h[1], h[0]-remember] for h in heap if h[0] != remember])
     if not dq:
         return -1
     else:
