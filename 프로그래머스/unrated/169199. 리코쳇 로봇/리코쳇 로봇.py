@@ -16,39 +16,23 @@ def solution(board):
     dq = deque([[sx, sy, 0]])
     dx, dy = [0, 0, 1, -1], [1, -1, 0, 0]
     maps[sx][sy] = 1
-    def check(i, nx, ny):
-        if (i == 0 and ny == c-1) or (i==1 and ny==0) or (i==2 and nx == r-1) or (i==3 and nx==0):
-            return True
-        return False
     def bfs():
+        vi = set((sx, sy))
         while dq:
             x, y, cnt = dq.popleft()
             if x == ex and y == ey:
                 return cnt
+            if (x, y) in vi:
+                continue
+            vi.add((x,y))
             for i in range(4):
                 rx, ry = x, y
-                move = 0
-                while move < max(r, c):
-                    move += 1
+                while True:
                     nx, ny = rx + dx[i], ry + dy[i]
-                    if not (0<=nx<r and 0<=ny<c):
-                        break
-                    # D를 마주함 -> 더는 그 방향으로 가면 안됨
-                    if board[nx][ny] == 'D':
-                        if not maps[rx][ry]:
-                            maps[rx][ry] = cnt + 1
-                            dq.append([rx, ry, cnt + 1])
-                        break
-                    # 벽의 끝을 마주함
-                    if check(i, nx, ny):
-                        if not maps[nx][ny]:
-                            maps[nx][ny] = cnt + 1
-                            dq.append([nx, ny, cnt + 1])
-                        break
-                    rx, ry = nx, ny
-                    
-    ans = bfs()                         
-    if ans != None:
-        return ans
-    else:
+                    if 0<=nx<r and 0<=ny<c and board[nx][ny] != "D":
+                        rx, ry = nx, ny
+                        continue
+                    dq.append([rx, ry, cnt+1])
+                    break
         return -1
+    return bfs()
