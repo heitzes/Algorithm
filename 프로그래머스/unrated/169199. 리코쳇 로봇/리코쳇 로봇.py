@@ -6,7 +6,6 @@ def solution(board):
     멈춰선 위치가 child가 되어 queue에 들어간다
     """
     r, c = len(board), len(board[0])
-    maps = [[0]*c for _ in range(r)]
     for i in range(r):
         for j in range(c):
             if board[i][j] == 'R':
@@ -15,7 +14,6 @@ def solution(board):
                 ex, ey = i, j
     dq = deque([[sx, sy, 0]])
     dx, dy = [0, 0, 1, -1], [1, -1, 0, 0]
-    maps[sx][sy] = 1
     def bfs():
         vi = set((sx, sy))
         while dq:
