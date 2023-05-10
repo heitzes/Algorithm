@@ -6,20 +6,8 @@ def solution(x, y, n):
         cur, cnt = dq.popleft()
         if cur == y:
             return cnt
-        if cur < y:
-            if cur + n not in vi:
-                if cur + n == y:
-                    return cnt + 1
-                vi.add(cur + n)
-                dq.append([cur + n, cnt + 1])
-            if cur * 2 not in vi:
-                if cur * 2 == y:
-                    return cnt + 1
-                vi.add(cur * 2)
-                dq.append([cur * 2, cnt + 1])
-            if cur * 3 not in vi:
-                if cur * 3 == y:
-                    return cnt + 1
-                vi.add(cur * 3)
-                dq.append([cur * 3, cnt + 1])
+        for nxt in [cur + n, cur * 2, cur * 3]:
+            if nxt <= y and nxt not in vi:
+                vi.add(nxt)
+                dq.append([nxt, cnt + 1])
     return -1
