@@ -6,8 +6,5 @@ def solution(s):
         if not stack or i == "(":
             stack.append(i)
         else:
-            if stack[-1] == "(":
-                stack.pop()
-    if stack:
-        return False
-    return True
+            stack.pop()
+    return len(stack) == 0
