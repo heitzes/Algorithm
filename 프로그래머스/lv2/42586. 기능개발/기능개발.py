@@ -2,7 +2,7 @@ def solution(progresses, speeds):
     answer = [0]
     timeline = []
     for p, s in zip(progresses, speeds):
-        timeline.append(-int(-(100-p)//s))
+        timeline.append(-((p-100)//s))
     cur = timeline[0]
     while timeline:
         tpop = timeline.pop(0)
