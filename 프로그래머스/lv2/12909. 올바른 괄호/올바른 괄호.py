@@ -1,10 +1,14 @@
 def solution(s):
+    answer = True
     stack = []
-    if s[0] == ")":
-        return False
+    # ) 는 넣지 않고, (가 있으면 pop
     for i in s:
-        if not stack or i == "(":
+        if i =='(':
             stack.append(i)
-        else:
+        elif stack and stack[-1] == '(':
             stack.pop()
-    return len(stack) == 0
+        else:
+            return False
+    if stack:
+        return False
+    return True
