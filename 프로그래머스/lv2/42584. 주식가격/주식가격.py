@@ -1,14 +1,14 @@
+from collections import deque
 def solution(prices):
-    answer = [0]
-    stack = [[prices[-1], 0]]
-    for price in prices[::-1][1:]:
-        cnt = 1
+    answer, stack = [0], [[prices.pop(), 0]]
+    while prices:
+        ppop = prices.pop()
+        val = 0
         while stack:
-            if price <= stack[-1][0]:
-                _, c = stack.pop()
-                cnt += c
-                continue
-            break
-        stack.append([price, cnt])
-        answer.append(cnt)
+            if ppop > stack[-1][0]:
+                break
+            val += stack[-1][1]
+            stack.pop()
+        answer.append(val+1)
+        stack.append([ppop, val+1])     
     return answer[::-1]
