@@ -13,8 +13,8 @@ def solution(bridge_length, weight, truck_weights):
             bridge.appendleft(0)
             tq.appendleft(tpop)
         answer += 1  
-    for i, v in enumerate(bridge):
-        if v != 0:
-            answer += bridge_length - i
+    for i in range(bridge_length):
+        if bridge[i] != 0:
+            answer += (bridge_length-i)
             break
     return answer
