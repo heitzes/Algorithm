@@ -1,13 +1,16 @@
 from collections import defaultdict
 def solution(genres, plays):
     answer = []
-    gen_played = defaultdict(int)
-    song_played = defaultdict(list)
-    for ind, gen in enumerate(genres):
-        gen_played[gen] += plays[ind]
-        song_played[gen].append([plays[ind], ind])
-    gen_list = sorted(gen_played.items(), key=lambda x: -x[1])
-    for gen, _ in gen_list:
-        song_list = sorted(song_played[gen], key=lambda x: (-x[0], x[1]))
-        answer.extend([i[1] for i in song_list[:2]])
+    # 1. {장르1: [[재생수, 번호]], 장르2: [[재생수, 번호]]} 순으로 정리
+    # 2. {장르1: 총 재생수} 순으로 정리
+    glist = defaultdict(int)
+    gdict = defaultdict(list)
+    for i, p in enumerate(plays):
+        g = genres[i]
+        glist[g] += p
+        gdict[g].append([p, i])
+    gorder = sorted(list(glist.items()), key=lambda x: -x[1])
+    for g, _ in gorder:
+        gplay = sorted(gdict[g], key=lambda x: (-x[0], x[1]))
+        answer.extend([i[1] for i in gplay[:2]])
     return answer
