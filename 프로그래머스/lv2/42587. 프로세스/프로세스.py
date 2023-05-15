@@ -1,12 +1,15 @@
+from collections import deque
 def solution(priorities, location):
     answer = 0
-    pq = list(map(list, zip(priorities, range(len(priorities)))))
-    while pq:
-        ppop = pq.pop(0)
-        if pq and ppop[0] < max(pq)[0]:
-            pq.append(ppop)
+    maxi = deque(sorted(priorities, reverse=True))
+    pq = deque(list(enumerate(priorities)))
+    while priorities:
+        ind, ppop = pq.popleft()
+        if ppop < maxi[0]:
+            pq.append([ind, ppop])
             continue
         answer += 1
-        if ppop[1] == location:
-            break
+        if ind == location:
+            return answer
+        maxi.popleft()
     return answer
