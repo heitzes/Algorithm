@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 10.2 MB, 시간: 0.01 ms
+메모리: 10.1 MB, 시간: 0.02 ms
 
 ### 구분
 
@@ -12,7 +12,7 @@
 
 ### 채점결과
 
-<br/>정확성: 100.0<br/>합계: 100.0 / 100.0
+Empty
 
 ### 문제 설명
 
@@ -113,7 +113,7 @@
 </tr>
 </tbody>
       </table>
-<p><a href="http://icpckorea.org/2016/ONLINE/problem.pdf" target="_blank" rel="noopener">출처</a></p>
+<p><a href="http://icpckorea.org/2016/ONLINE/problem.pdf" target="_blank" rel="noopener" class="L-Affiliate-Tagged">출처</a></p>
 
 <p>※ 공지 - 2020년 4월 06일 테스트케이스가 추가되었습니다.</p>
 
