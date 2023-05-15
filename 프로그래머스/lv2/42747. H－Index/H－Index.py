@@ -1,9 +1,11 @@
-from bisect import bisect_left
 def solution(citations):
     answer = 0
     citations = sorted(citations)
-    for i in range(max(citations)):
-        ind = bisect_left(citations, i)        
-        if len(citations) - ind >= i:
-            answer = max(answer, i)
+    for h in range(citations[-1]+1):
+        count = 0
+        for paper in citations:
+            if paper >= h:
+                count += 1
+        if count >= h:
+            answer = max(h, answer)
     return answer
