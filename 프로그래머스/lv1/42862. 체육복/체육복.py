@@ -1,6 +1,6 @@
 def solution(n, lost, reserve):
     answer = 0
-    reserve, lost = set(set(reserve)-set(lost)), set(set(lost)-set(reserve))
+    reserve, lost = set(reserve)-set(lost), set(lost)-set(reserve)
     cant = len(lost)
     for l in sorted(lost):
         if l-1 in reserve:
