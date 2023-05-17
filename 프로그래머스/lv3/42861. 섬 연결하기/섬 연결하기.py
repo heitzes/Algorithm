@@ -1,21 +1,17 @@
 def solution(n, costs):
     answer, cnt = 0, n-1
-    nset = set([i for i in range(n)])
-    costs = sorted(costs, key = lambda x: (-x[-1], x[0], x[1]))
-    n1, n2, c = costs.pop()
-    answer += c
-    cnt -= 1
-    nset -= set([n1, n2])
-    while nset and cnt > 0:
-        for i in range(len(costs)-1, -1, -1):
-            n1, n2, c = costs[i]
-            if n1 in nset and n2 in nset:
+    costs = sorted(costs, key = lambda x: (x[-1], x[0], x[1]))
+    nset = set()
+    while cnt != 0:
+        for cost in costs:
+            if not nset:
+                break
+            if cost[0] in nset and cost[1] in nset:
                 continue
-            if n1 not in nset and n2 not in nset:
-                continue
-            break
-        nset -= set([n1, n2])
+            if cost[0] in nset or cost[1] in nset:
+                break
+        nset.update(cost[:-1])
+        answer += cost[-1]
+        costs.remove(cost)
         cnt -= 1
-        answer += c
-        costs.remove([n1,n2,c])
     return answer
