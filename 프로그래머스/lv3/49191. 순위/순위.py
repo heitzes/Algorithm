@@ -5,6 +5,7 @@ def solution(n, results):
     for win, lose in results:
         scores[win][0].add(lose)
         scores[lose][1].add(win)
+    # 2중 for문으로도 해결 가능
     for i in range(1, n+1):
         for loser in scores[i][0]:
             scores[loser][1].update(scores[i][1])
