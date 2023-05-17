@@ -17,7 +17,5 @@ def solution(n, results):
                 dq.append(ch)
         return len(vi)
     for i in range(1, n+1):
-        win = bfs(0, i)
-        lose = bfs(1, i)
-        if win + lose == n-1: answer += 1
+        if bfs(0, i) + bfs(1, i) == n-1: answer += 1
     return answer
