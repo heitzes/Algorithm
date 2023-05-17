@@ -1,23 +1,22 @@
 from collections import defaultdict
-def make_tree(vi, graph, tree, nodes, n):
+def make_nodes(vi, graph, nodes, n):
     vi.add(n)
     for ch in graph[n]:
         if ch in vi:
             continue
-        tree[n].append(ch)
-        make_tree(vi, graph, tree, nodes, ch)
+        # 재귀적으로 탐색 (전위 순회)
+        make_nodes(vi, graph, nodes, ch)
         nodes[n] += nodes[ch]
     nodes[n] += 1
-    return tree, nodes
+    return nodes
 def solution(n, wires):
     answer = float('inf')
     graph = defaultdict(list)
     for wire in wires:
         graph[wire[0]].append(wire[1])
         graph[wire[1]].append(wire[0])
-    tree, nodes = make_tree(set(), graph, defaultdict(list), defaultdict(int), 1)
-    available = set(nodes.values())
-    for av in available:
+    nodes = make_nodes(set(), graph, defaultdict(int), 1)
+    for av in nodes.values():
         cut = n-av
         answer = min(answer, abs(cut-av))
     return answer
