@@ -1,15 +1,13 @@
 from collections import deque
 def solution(n, results):
     answer = 0
-    scores = dict()
-    for i in range(1, n+1):
-        scores[i] = [set(), set()]
+    scores = [[[], []] for _ in range(n+1)]
     for win, lose in results:
-        scores[win][0].add(lose)
-        scores[lose][1].add(win)
+        scores[win][0].append(lose)
+        scores[lose][1].append(win)
     def bfs(m, node):
-        vi = set([node])
-        dq = deque([node])
+        vi = set(scores[node][m])
+        dq = deque(scores[node][m])
         while dq:
             dpop = dq.popleft()
             for ch in scores[dpop][m]:
@@ -17,11 +15,9 @@ def solution(n, results):
                     continue
                 vi.add(ch)
                 dq.append(ch)
-                scores[node][m].add(ch)
+        return len(vi)
     for i in range(1, n+1):
-        bfs(0, i)
-        bfs(1, i)
-    for pw, pl in scores.values():
-        if len(pw) + len(pl) == n-1:
-            answer += 1
+        win = bfs(0, i)
+        lose = bfs(1, i)
+        if win + lose == n-1: answer += 1
     return answer
