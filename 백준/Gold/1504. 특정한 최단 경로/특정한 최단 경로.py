@@ -24,11 +24,9 @@ def dijkstra(k):
     return nodes
 u_d = dijkstra(u)
 v_d = dijkstra(v)
-uv = u_d[1] + v_d[n] + u_d[v]
-uu = u_d[1] + u_d[n] + u_d[v]*2
-vu = v_d[1] + u_d[n] + u_d[v]
-vv = v_d[1] + v_d[n] + u_d[v]*2
-mini = min([uv, uu, vv, vu])
+one = u_d[1] + u_d[v] + v_d[n]
+two = v_d[1] + v_d[u] + u_d[n]
+mini = min(one, two)
 if mini >= 1e9:
     print(-1)
 else:
