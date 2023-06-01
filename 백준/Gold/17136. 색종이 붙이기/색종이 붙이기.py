@@ -2,14 +2,7 @@ maps = [list(map(int, input().split())) for _ in range(10)]
 answer = 25
 count = [0, 5, 5, 5, 5, 5]
 vi = [[0]*10 for _ in range(10)]
-cover = 0
-for i in range(10):
-    for j in range(10):
-        cover += maps[i][j]
-
-def printArr(arr):
-    for row in arr:
-        print(' '.join(map(str, row)))
+cover = sum([sum(row) for row in maps])
 
 def max_p(i, j):
     for p in range(1,6):
@@ -20,6 +13,20 @@ def max_p(i, j):
                 if maps[nx][ny] == 0: 
                     return p-1
     return p
+
+def before_dfs(i, j, p):
+    vi[i][j] = 1
+    count[p] -= 1
+    for nx in range(i, i+p):
+        for ny in range(j, j+p):
+            maps[nx][ny] = 0
+
+def after_dfs(i, j, p):
+    vi[i][j] = 0
+    count[p] += 1
+    for nx in range(i, i+p):
+        for ny in range(j, j+p):
+            maps[nx][ny] = 1
 
 def dfs(x, y, remain):
     global answer
@@ -34,21 +41,10 @@ def dfs(x, y, remain):
             for p in range(maxp, 0, -1):
                 if count[p] == 0: continue
                 if answer < 25-sum(count): break
-                vi[i][j] = 1
-                count[p] -= 1
-                for nx in range(i, i+p):
-                    for ny in range(j, j+p):
-                        maps[nx][ny] = 0
+                before_dfs(i, j, p)
                 dfs(i, j, remain - p*p)
-                vi[i][j] = 0
-                count[p] += 1
-                for nx in range(i, i+p):
-                    for ny in range(j, j+p):
-                        maps[nx][ny] = 1
+                after_dfs(i, j, p)
             return answer
     return answer
 ans = dfs(0, 0, cover)
-if ans == 25:
-    print(-1)
-else:
-    print(ans)
+print(ans if ans!=25 else -1)
