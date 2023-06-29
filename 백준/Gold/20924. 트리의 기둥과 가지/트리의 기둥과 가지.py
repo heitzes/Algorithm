@@ -9,6 +9,7 @@ for _ in range(n-1):
     graph[b].append([a, c])
 vi = set()
 branch = [0] * (n+1)
+giga = -1
 def make_tree(idx, val):
     vi.add(idx)
     for ch in graph[idx]:
@@ -17,13 +18,12 @@ def make_tree(idx, val):
             continue
         make_tree(ch[0], val + ch[1])
     branch[idx] = val    
-make_tree(root, 0)
-
 def find_giga(idx):
     if len(tree[idx]) >= 2:
         return idx
     for ch in tree[idx]:
         return find_giga(ch)
+    return idx
+make_tree(root, 0)
 giga = find_giga(root)
-if giga == None : giga = [i for i in range(1, n+1) if len(tree[i])==0][0]
 print(branch[giga], max(branch)-branch[giga])
