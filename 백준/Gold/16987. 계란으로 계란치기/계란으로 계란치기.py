@@ -1,28 +1,28 @@
 n = int(input())
-orders = []
-ans = 0
 eggs = [list(map(int, input().split())) for _ in range(n)]
+ans = 0
 
-def calc(hit, ref):
-    global n
-    ref = [row[:] for row in ref]
-    for i in range(n):
-        a, b = i, hit[i]
-        if ref[a][0] <=0 or ref[b][0] <=0: continue 
-        ref[a][0] -= ref[b][1]
-        ref[b][0] -= ref[a][1]
+def check():
     answer = 0
-    for egg in ref:
+    for egg in eggs:
         if egg[0] <= 0: answer += 1
     return answer
 
-def order(idx, olist):
+def backtrack(idx):
     global n, ans
     if idx == n:
-        ans = max(ans, calc(olist, eggs))
+        ans = max(ans, check())
         return
+    if eggs[idx][0] <= 0:
+        backtrack(idx+1)
     for i in range(n):
-        if i != idx:
-            order(idx+1, olist + [i])
-order(0, [])
+        if i != idx and eggs[i][0] > 0 and eggs[idx][0] > 0:
+            eggs[i][0] -= eggs[idx][1]
+            eggs[idx][0] -= eggs[i][1]
+            backtrack(idx + 1)
+            eggs[idx][0] += eggs[i][1]
+            eggs[i][0] += eggs[idx][1]
+    else:
+        backtrack(n)
+backtrack(0)
 print(ans)
