@@ -1,14 +1,27 @@
 n = int(input())
-word = input()
-wlist, hlist = [], []
-edp = [0] * (n+1)
-wdp = [0] * (n+1)
+string = input()
+wind, eind, hind = [], [], []
+for i in range(n):
+    if string[i] == "H":
+        hind.append(i)
+    if i == 0:
+        wind.append(0)
+        continue
+    if string[i-1] == "W":
+        wind.append(wind[-1] + 1)
+    else:
+        wind.append(wind[-1])
 for i in range(n-1, -1, -1):
-    edp[i] = edp[i+1] + (1 if word[i] == "E" else 0)
-for j in range(1, n+1):
-    wdp[j] = wdp[j-1] + (1 if word[j-1] == "W" else 0)
+    if i == n-1:
+        eind.append(0)
+        continue
+    if string[i+1] == "E":
+        eind.append(eind[-1] + 1)
+    else:
+        eind.append(eind[-1])
+eind = eind[::-1]
 answer = 0
-for k in range(n):
-    if word[k] == "H":
-        answer += (wdp[k]) * (2**(edp[k])-(1+edp[k])) % (1000000007)
-print(answer % (1000000007))
+for h in hind:
+    k = eind[h]
+    answer += wind[h] * (2 ** (k) - (1+k))
+print(answer % 1000000007)
