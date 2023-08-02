@@ -1,29 +1,19 @@
-from collections import deque
 n = int(input())
-alpha = dict()
+nlist = [[0]*58 for _ in range(58)]
+cnt = 0
 for _ in range(n):
     x, y = input().split(" => ")
-    if x not in alpha:
-        alpha[x] = [set(), set()]
-    if y not in alpha:
-        alpha[y] = [set(), set()]
-    alpha[y][0].add(x)
-    alpha[x][1].add(y)
-anslist = []
-def bfs(k):
-    dq = deque(alpha[k][1])
-    vi = set(alpha[k][1])
-    while dq:
-        x = dq.popleft()
-        for ch in alpha[x][1]:
-            if ch not in vi:
-                dq.append(ch)
-                vi.add(ch)
-    for u in sorted(vi):
-        if u == k: continue
-        anslist.append([k, u])
-for k in sorted(alpha):
-    bfs(k)
-print(len(anslist))
-for x, y in anslist:
-    print('{} => {}'.format(x, y))
+    if x != y and not nlist[ord(x)-65][ord(y)-65]:
+        nlist[ord(x)-65][ord(y)-65] = 1
+        cnt += 1
+for k in range(58):
+    for i in range(58):
+        for j in range(58):
+            if i != j and not nlist[i][j] and nlist[i][k] and nlist[k][j]:
+                nlist[i][j] = 1
+                cnt += 1
+print(cnt)
+for i in range(58):
+    for j in range(58):
+        if nlist[i][j]:
+            print("{} => {}".format(chr(i+65), chr((j+65))))
