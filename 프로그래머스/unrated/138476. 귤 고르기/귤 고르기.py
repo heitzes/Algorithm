@@ -1,11 +1,9 @@
-from collections import defaultdict
+from collections import Counter
 def solution(k, tangerine):
     answer = 0
-    cnt = defaultdict(int)
-    for t in tangerine:
-        cnt[t] += 1
-    scnt = sorted(cnt.items(), key=lambda x: x[-1])
+    cnt = Counter(tangerine)
+    scnt = sorted(cnt.values(), key=lambda x: x)
     while k > 0:
-        k -= scnt.pop()[-1]
+        k -= scnt.pop()
         answer += 1
     return answer
