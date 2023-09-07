@@ -2,44 +2,43 @@ def solution(commands):
     answer = []
     r, c = 50, 50
     board = [['']*(c+1) for _ in range(r+1)]
-    p = [['{0}*{1}'.format(i, j) for j in range(c+1)] for i in range(r+1)]
+    p = [[[i, j] for j in range(c+1)] for i in range(r+1)]
     def find(x, y):
-        if p[x][y] == '{0}*{1}'.format(x,y): return p[x][y]
-        rx, ry = p[x][y].split("*")
-        p[x][y] = find(int(rx), int(ry))
+        if p[x][y] == [x, y]: return p[x][y]
+        rx, ry = p[x][y]
+        p[x][y] = find(rx, ry)
         return p[x][y]
     def union(x1, y1, x2, y2):
-        rx1, ry1 = map(int, find(x1, y1).split("*"))
-        rx2, ry2 = map(int, find(x2, y2).split("*"))
+        rx1, ry1 = find(x1, y1)
+        rx2, ry2 = find(x2, y2)
         if rx1==rx2 and ry1==ry2: return
         if board[rx1][ry1]:
-            p[rx2][ry2] = '{0}*{1}'.format(rx1, ry1)
+            p[rx2][ry2] = [rx1, ry1]
         else:
-            p[rx1][ry1] = '{0}*{1}'.format(rx2, ry2)
+            p[rx1][ry1] = [rx2, ry2]
     def update(x, y, k):
-        rx, ry = map(int, find(x, y).split("*"))
+        rx, ry = find(x, y)
         board[rx][ry] = k
     def updateV(k, v):
         for x in range(1, r+1):
             for y in range(1, c+1):
-                rx, ry = map(int, find(x, y).split("*"))
+                rx, ry = find(x, y)
                 if board[rx][ry] == k:
-                    update(rx, ry, v)
+                    board[rx][ry] = v
     def dunion(x, y):
-        root = find(x, y)
-        rx, ry = map(int, root.split("*"))
+        rx, ry = find(x, y)
         string = board[rx][ry]
         reset = []
         for i in range(1, r+1):
             for j in range(1, c+1):
-                if find(i, j) == root:
+                if find(i, j) == [rx, ry]:
                     reset.append([i, j])
         for i, j in reset:
-            p[i][j] = '{0}*{1}'.format(i, j)
+            p[i][j] = [i, j]
             board[i][j] = ''
         board[x][y] = string
     def printV(x, y):
-        rx, ry =  map(int, find(x, y).split("*"))
+        rx, ry = find(x, y)
         if board[rx][ry] !='': return board[rx][ry]
         else: return "EMPTY"
     for cmds in commands:
